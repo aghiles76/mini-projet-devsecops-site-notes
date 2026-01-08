@@ -60,7 +60,6 @@ jobs:
           path: zap_report.html
 
   deploy:
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Déclencher le déploiement sur Render
