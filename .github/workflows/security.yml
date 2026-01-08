@@ -1,0 +1,59 @@
+name: DevSecOps - SAST/DAST
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  sast-phpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+
+      - name: Install Composer
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+          composer --version
+
+      - name: Install PHPCS
+        run: composer require --dev squizlabs/php_codesniffer
+
+      - name: Run PHPCS (SAST)
+        run: |
+          mkdir -p reports
+          php vendor/bin/phpcs -p --standard=PSR12 . > reports/phpcs.txt || true
+
+      - name: Upload PHPCS report
+        uses: actions/upload-artifact@v4
+        with:
+          name: phpcs-report
+          path: reports/phpcs.txt
+
+  dast-zap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Start PHP server
+        run: |
+          php -S 127.0.0.1:8000 > /tmp/phpserver.log 2>&1 &
+          sleep 2
+
+      - name: ZAP baseline (DAST)
+        run: |
+          docker run --rm -t --network host owasp/zap2docker-stable zap-baseline.py \
+            -t http://127.0.0.1:8000 \
+            -r zap_report.html || true
+
+      - name: Upload ZAP report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: zap_report.html
+
