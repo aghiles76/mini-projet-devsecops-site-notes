@@ -59,3 +59,9 @@ jobs:
           name: zap-report
           path: zap_report.html
 
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Déclencher le déploiement sur Render
+        run: |
+          curl -X POST "https://api.render.com/deploy/srv-d5fspq2li9vc73906hg0?key=rnd_bzjSsVCuwvRnKhUDdMU9x2vbVeWO"
