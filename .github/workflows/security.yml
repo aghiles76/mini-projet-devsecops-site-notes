@@ -46,7 +46,7 @@ jobs:
           sleep 2
 
       - name: ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.12.0
+        uses: zaproxy/action-baseline@v0.15.0
         with:
           target: http://127.0.0.1:8000
           fail_action: false
