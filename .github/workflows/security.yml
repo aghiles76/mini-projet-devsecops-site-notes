@@ -35,6 +35,8 @@ jobs:
           name: phpcs-report
           path: reports/phpcs.txt
   sast-sonarcube:
+    runs-on: ubuntu-latest
+    steps:
       - name: Analyse du code avec SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2
         env:
