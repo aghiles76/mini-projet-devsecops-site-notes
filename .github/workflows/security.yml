@@ -90,7 +90,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [sast-phpcs, dast-zap]
+    needs: [sast-phpcs, dast-zap, sast-sonarcube]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Déclencher le déploiement sur Render
