@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  sast-phpcs:
+  sast-phpcs-sonar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,9 +34,7 @@ jobs:
         with:
           name: phpcs-report
           path: reports/phpcs.txt
-  sast-sonarcube:
-    runs-on: ubuntu-latest
-    steps:
+
       - name: Analyse du code avec SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2
         env:
