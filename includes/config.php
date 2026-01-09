@@ -1,7 +1,7 @@
 <?php 
 // DB credentials.
 define('DB_HOST','localhost');
-define('DB_USER','root');
+define('DB_USER','root2');
 define('DB_PASS','root');
 define('DB_NAME','notes_esigelec');
 // Establish database connection.
