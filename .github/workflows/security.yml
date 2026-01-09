@@ -34,7 +34,15 @@ jobs:
         with:
           name: phpcs-report
           path: reports/phpcs.txt
-
+  sast-sonarcube:
+      - name: Analyse du code avec SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=aghiles76
+            -Dsonar.projectKey=aghiles76_mini-projet-devsecops-site-notes
   dast-zap:
     runs-on: ubuntu-latest
     permissions:
